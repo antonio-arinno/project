@@ -1,0 +1,6 @@
+package com.arinno.project.app.project.controller;
+
+@RestController
+public class ProjectController {
+
+}

@@ -1,0 +1,5 @@
+package com.arinno.project.app.product.controller;
+
+public class ProductController {
+
+}

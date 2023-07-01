@@ -1,0 +1,13 @@
+package com.arinno.project.app.imputation.service;
+
+import java.util.List;
+
+import com.arinno.project.app.model.entity.Imputation;
+
+public interface IImputationService {
+
+	public List<Imputation> findAll();
+	
+	public Imputation findById(Long Id);
+	
+}

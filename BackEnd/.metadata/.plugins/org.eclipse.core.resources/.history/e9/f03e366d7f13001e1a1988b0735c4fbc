@@ -1,0 +1,5 @@
+package com.arinno.project.app.imputation.service;
+
+public interface IImputationService {
+
+}

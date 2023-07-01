@@ -1,0 +1,5 @@
+package com.arinno.project.app.project.service;
+
+public interface IProjectService {
+
+}

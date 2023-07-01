@@ -1,0 +1,9 @@
+package com.arinno.project.app.model;
+
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class ProjectServiceModelApplication {
+
+
+}

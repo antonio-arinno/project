@@ -1,0 +1,15 @@
+package com.arinno.project.app.product;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+
+@SpringBootApplication
+@EntityScan({""})
+public class ProjectServiceProductApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(ProjectServiceProductApplication.class, args);
+	}
+
+}
