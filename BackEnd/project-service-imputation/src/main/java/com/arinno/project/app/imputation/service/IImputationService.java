@@ -10,4 +10,8 @@ public interface IImputationService {
 	
 	public Imputation findById(Long Id);
 	
+	public Imputation save(Imputation imputation);
+	
+	public void deleteById(Long id);
+	
 }

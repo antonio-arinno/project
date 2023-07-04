@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.arinno.project.app.imputation.repository.ImputationDao;
 import com.arinno.project.app.model.entity.Imputation;
@@ -22,6 +23,18 @@ public class ImputationServiceImpl implements IImputationService {
 	@Override
 	public Imputation findById(Long id) {
 		return imputationDao.findById(id).orElse(null);
+	}
+
+	@Override
+	@Transactional
+	public Imputation save(Imputation imputation) {
+		return imputationDao.save(imputation);
+	}
+
+	@Override
+	@Transactional
+	public void deleteById(Long id) {
+		imputationDao.deleteById(id);		
 	}
 
 }

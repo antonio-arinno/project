@@ -8,6 +8,10 @@ public interface IProjectService {
 	
 	public List<Project> findAll();
 	
-	public Project findById(Long Id);
+	public Project findById(Long id);
+	
+	public Project save(Project project);
+	
+	public void deleteById(Long id); 
 
 }

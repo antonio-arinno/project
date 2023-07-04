@@ -1,5 +1,0 @@
-package com.arinno.project.app.imputation.repository;
-
-public class ImputationDao extends CrudRepository {
-
-}
