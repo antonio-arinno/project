@@ -1,7 +1,0 @@
-spring:
-  cloud:
-    gateway:
-      routes:
-      - id: service-product
-        uri: lb://service-product
-          

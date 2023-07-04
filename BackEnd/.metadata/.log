@@ -10404,3 +10404,38 @@ java.util.concurrent.TimeoutException
 	at org.springframework.tooling.jdt.ls.commons.classpath.SendClasspathNotificationsJob.flush(SendClasspathNotificationsJob.java:178)
 	at org.springframework.tooling.jdt.ls.commons.classpath.SendClasspathNotificationsJob.run(SendClasspathNotificationsJob.java:149)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.egit.core 4 0 2023-07-04 11:25:12.281
+!MESSAGE An exception occurred during push on URI https://github.com/antonio-arinno/project.git: https://github.com/antonio-arinno/project.git: not authorized
+!STACK 0
+org.eclipse.jgit.errors.TransportException: https://github.com/antonio-arinno/project.git: not authorized
+	at org.eclipse.jgit.transport.TransportHttp.connect(TransportHttp.java:685)
+	at org.eclipse.jgit.transport.TransportHttp.connect(TransportHttp.java:627)
+	at org.eclipse.jgit.transport.TransportHttp.openPush(TransportHttp.java:541)
+	at org.eclipse.jgit.transport.PushProcess.execute(PushProcess.java:138)
+	at org.eclipse.jgit.transport.Transport.push(Transport.java:1537)
+	at org.eclipse.egit.core.op.PushOperation.run(PushOperation.java:269)
+	at org.eclipse.egit.ui.internal.push.PushJob.performJob(PushJob.java:86)
+	at org.eclipse.egit.ui.internal.jobs.RepositoryJob.run(RepositoryJob.java:59)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.egit.ui 4 0 2023-07-04 11:25:12.338
+!MESSAGE Can't connect to any repository: https://github.com/antonio-arinno/project.git (https://github.com/antonio-arinno/project.git: not authorized)
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2023-07-04 11:26:24.081
+!MESSAGE Classpath changed for project: project-service-user
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2023-07-04 11:26:24.084
+!MESSAGE Boot project REMOVED: project-service-user
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2023-07-04 11:26:24.088
+!MESSAGE executing callback sts4.classpath.yiLikkmr FAILED
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 4 0 2023-07-04 11:26:24.091
+!MESSAGE No language server has registered to handle command 'sts4.classpath.yiLikkmr'
+!STACK 0
+java.lang.UnsupportedOperationException: No language server has registered to handle command 'sts4.classpath.yiLikkmr'
+	at org.springframework.tooling.ls.eclipse.commons.LSP4ECommandExecutor.executeClientCommand(LSP4ECommandExecutor.java:42)
+	at org.springframework.tooling.jdt.ls.commons.classpath.SendClasspathNotificationsJob.flush(SendClasspathNotificationsJob.java:178)
+	at org.springframework.tooling.jdt.ls.commons.classpath.SendClasspathNotificationsJob.run(SendClasspathNotificationsJob.java:149)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
