@@ -19,4 +19,10 @@ spring:
         predicates:
         - Path=/imputation/**
         filters:
-        - StripPrefix=1           
+        - StripPrefix=1 
+      - id: service-user
+        uri: lb://service-user
+        predicates:
+          - Path=/user/**
+        filters:
+          - StripPrefix=1                               
