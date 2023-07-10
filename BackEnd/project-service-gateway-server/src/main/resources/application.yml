@@ -25,4 +25,10 @@ spring:
         predicates:
           - Path=/user/**
         filters:
-          - StripPrefix=1                               
+          - StripPrefix=1   
+      - id: service-oauth
+        uri: lb://service-oauth
+        predicates:
+          - Path=/oauth/**
+        filters:
+          - StripPrefix=1                                      

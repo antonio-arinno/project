@@ -8,5 +8,7 @@ import com.arinno.project.app.model.entity.User;
 //@RepositoryRestResource(path="users")
 @RepositoryRestResource
 public interface UserDao extends CrudRepository<User, Long>{
+	
+	public User findByUsername(String username);
 
 }
