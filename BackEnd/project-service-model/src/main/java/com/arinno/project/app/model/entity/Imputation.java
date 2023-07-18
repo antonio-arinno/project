@@ -3,6 +3,7 @@ package com.arinno.project.app.model.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -23,7 +24,7 @@ public class Imputation implements Serializable {
 	
 	@Temporal(TemporalType.DATE)
 	private Date date;	
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Project project;
 	
