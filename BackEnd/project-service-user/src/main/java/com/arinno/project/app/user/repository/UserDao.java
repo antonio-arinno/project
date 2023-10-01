@@ -5,7 +5,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import com.arinno.project.app.model.entity.User;
 
-//@RepositoryRestResource(path="users")
+//@RepositoryRestResource(path="utils")
 @RepositoryRestResource
 public interface UserDao extends CrudRepository<User, Long>{
 	

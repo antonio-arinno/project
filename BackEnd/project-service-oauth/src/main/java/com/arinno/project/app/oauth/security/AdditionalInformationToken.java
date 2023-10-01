@@ -22,7 +22,6 @@ public class AdditionalInformationToken implements TokenEnhancer{
 	@Override
 	public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
 		Map<String, Object> info = new HashMap<String, Object>();
-
 		
 		User user = userService.findByUsername(authentication.getName());
 		info.put("name", user.getName());
@@ -32,5 +31,6 @@ public class AdditionalInformationToken implements TokenEnhancer{
 		
 		return accessToken;
 	}
+
 
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.arinno.project.app.model.entity.Company;
 import com.arinno.project.app.model.entity.Project;
 import com.arinno.project.app.project.repository.ProjectDao;
 
@@ -14,15 +15,19 @@ public class ProjectServiceImpl implements IProjectService {
 	
 	@Autowired
 	private ProjectDao projectDao;
+	
+	@Autowired
+	private IUserFeign userFeign; 
 
 	@Override
-	public List<Project> findAll() {
-		return (List<Project>) projectDao.findAll();
+	@Transactional(readOnly = true)
+	public List<Project> findByCompany(Company company) {
+		return (List<Project>) projectDao.findByCompany(company);
 	}
 
 	@Override
-	public Project findById(Long id) {
-		return projectDao.findById(id).orElse(null);
+	public Project findByIdAndCompany(Long id, Company company) {
+		return projectDao.findByIdAndCompany(id, company);
 	}
 
 	@Override
@@ -32,9 +37,21 @@ public class ProjectServiceImpl implements IProjectService {
 	}
 
 	@Override
-	@Transactional	
-	public void deleteById(Long id) {
-		projectDao.deleteById(id);		
+	@Transactional		
+	public void deleteByIdAndCompany(Long id, Company company) {
+		projectDao.deleteByIdAndCompany(id, company);
 	}
+
+	@Override
+	@Transactional
+	public Company findByUsername(String name) {
+		return userFeign.findByUsername(name).getCompany();
+	}
+	
+	@Override
+	@Transactional
+	public List<Project> findByNameContainingIgnoreCaseAndCompany(String term, Company company) {
+		return projectDao.findByNameContainingIgnoreCaseAndCompany(term, company);
+	}		
 
 }

@@ -3,6 +3,8 @@ package com.arinno.project.app.model.entity;
 import java.io.Serializable;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -10,6 +12,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -40,6 +43,10 @@ public class User implements Serializable {
 	
 	@ManyToMany(fetch = FetchType.LAZY)
 	private List<Role> roles;
+	
+    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })	
+    @ManyToOne(fetch = FetchType.EAGER)	
+    private Company company;	
 
 	public Long getId() {
 		return id;
@@ -97,8 +104,6 @@ public class User implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	
 
 	public List<Role> getRoles() {
 		return roles;
@@ -106,6 +111,14 @@ public class User implements Serializable {
 
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
+	}
+	
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
 	}
 
 	private static final long serialVersionUID = 7518857854008514980L;

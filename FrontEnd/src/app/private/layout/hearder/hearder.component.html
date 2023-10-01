@@ -1,0 +1,27 @@
+<mat-toolbar class="height" color="primary">
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>My App</span>
+    <span class="spacer"></span>
+    <div class="user-info">
+      <span>
+          Hi, 
+          {{this.authService.user.name}}
+      </span>
+      <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon" [matMenuTriggerFor]="userMenu">
+        <mat-icon>person</mat-icon>
+      </button>
+    </div>
+    <mat-menu #userMenu="matMenu">
+      <button mat-menu-item (click)="logout()">
+          <mat-icon>logout</mat-icon>
+          <span>Log Out</span>
+      </button>
+      <button mat-menu-item routerLink="/pvt/auth/register">
+          <mat-icon>account_box</mat-icon>
+          <span>Profile</span>
+      </button>
+    </mat-menu>   
+</mat-toolbar>
+
