@@ -1,1 +1,30 @@
+
+
+angular
+ng build
+docker run -d -p 80:80 -v c:/work/projects/project/frontend/dist/project:/usr/share/nginx/html --network projectfront --name service-angular-server nginx:alpine
+
+docker run -d -p 8080:80 -v c:/work/projects/myApp/dist/my-app:/usr/share/nginx/html nginx:alpine
+
+
+mvnw clean package [-DskipTests]
+(crear Dockerfile)
+docker buid . -t [imagen:version]
+docker network create [red]
+docker run -d -p port_ext:port_int --name [contendor] --network [red] imagen:version
+docker network connect [red] [container]
+
+(Mysql)
+docker pull [imagen:ver]
+docker run -p 3306:3306 --name [contenedor] --network [red] -e MYSQL_ROOT_PASSWORD=[password] -e MYSQL_DATABASE=[base_datos] -d imagen:ver
+
+
+
+urls interesantes:
+
 https://stackoverflow.com/questions/67507452/no-spring-config-import-property-has-been-defined
+
+https://www.udemy.com/course/microservicios-con-spring-boot-y-spring-cloud/learn/lecture/16513664#questions/11803508
+
+https://www.returngis.net/2020/12/como-funcionan-las-redes-en-docker/
+docker network connect returngis-net container-1

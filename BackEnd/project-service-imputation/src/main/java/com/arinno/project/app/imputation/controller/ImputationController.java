@@ -1,7 +1,11 @@
 package com.arinno.project.app.imputation.controller;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Base64;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +50,23 @@ public class ImputationController {
 		return imputationService.save(imputation);
 	}
 	
+	@GetMapping("/createcal")
+	@ResponseStatus(HttpStatus.CREATED)
+	public void createCal(@RequestHeader(value="Authorization") String auth) {
+
+		ZoneId defaultZoneId = ZoneId.systemDefault(); 
+        for ( LocalDate day = LocalDate.parse("2023-01-01"); day.getYear() < 2024 ; day = day.plusDays(1)) {
+    		Imputation imputation = new Imputation();
+    		imputation.setUser(getUser(auth));
+    		imputation.setCompany(getCompany(auth));
+    		Date date = Date.from(day.atStartOfDay(defaultZoneId).toInstant());
+    		imputation.setDate(date);
+    		imputationService.save(imputation);
+
+
+        }		
+	}	
+	
 	@PutMapping("/{id}")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Imputation edit(@RequestBody Imputation imputation, @PathVariable Long id, @RequestHeader(value="Authorization") String auth) {
@@ -54,6 +75,7 @@ public class ImputationController {
 		imputationDb.setItems(imputation.getItems());
 		return imputationService.save(imputationDb);
 	}
+	
 	
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)

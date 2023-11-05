@@ -1,0 +1,18 @@
+version: '3.8'
+services:
+  service2-config-server:
+    image: service-config-server:v1
+    ports:
+    - "8888:8888"
+    restart: always
+    networks:
+      - project
+  service2-eureka-server:
+    image: service-eureka-server:v1
+    ports:
+    - "8761:8761"
+    restart: always
+    networks:
+      - project      
+networks:
+  project:

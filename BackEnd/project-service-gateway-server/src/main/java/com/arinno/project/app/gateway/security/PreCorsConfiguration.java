@@ -28,7 +28,8 @@ public class PreCorsConfiguration {
         config.addAllowedMethod(HttpMethod.POST);
         config.addAllowedMethod(HttpMethod.DELETE);
         config.addAllowedMethod(HttpMethod.OPTIONS);
-        config.addAllowedOrigin("http://localhost:4200");
+//        config.addAllowedOrigin("http://localhost:4200");
+//		config.addAllowedOrigin("http://prueba:80");
         source.registerCorsConfiguration("/**", config);
         return source;
     }    

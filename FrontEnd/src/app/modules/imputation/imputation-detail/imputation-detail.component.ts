@@ -130,7 +130,6 @@ export class ImputationDetailComponent implements OnInit {
     event.preventDefault();
     if(this.form.valid){
       this.imputation.date = this.form.get('date')?.value;
-      console.log(this.imputation);
       this.imputationService.create(this.imputation).subscribe({
         next: (res: any) => {
           this.router.navigateByUrl('/pvt/imputation/imputation');

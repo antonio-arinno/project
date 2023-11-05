@@ -28,7 +28,7 @@ public class AuthenticationManagerJwt implements ReactiveAuthenticationManager{
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public Mono<Authentication> authenticate(Authentication authentication) {
+	public Mono<Authentication> authenticate(Authentication authentication) {	
 		return Mono.just(authentication.getCredentials().toString())
 				.map(token -> {
 					SecretKey key = Keys.hmacShaKeyFor(Base64.getEncoder().encode(env.getProperty("config.security.oauth.jwt.key").getBytes()));
