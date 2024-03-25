@@ -9,6 +9,9 @@ const routes: Routes =[
     { path: 'imputation',
       loadChildren: () => import('@modules/imputation/imputation.module').then(m => m.ImputationModule)
     },    
+    { path: 'imputation2',
+      loadChildren: () => import('@modules/imputation2/imputation2.module').then(m => m.Imputation2Module)
+    },    
     { path: 'product',
       loadChildren: () => import('@modules/product/product.module').then(m => m.ProductModule)
     },

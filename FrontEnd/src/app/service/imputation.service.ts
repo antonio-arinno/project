@@ -18,6 +18,11 @@ export class ImputationService {
     return this.http.get<Imputation>(URL_BACKEND + `/imputation/${id}`);
   }
 
+  getByDate(date: string){
+    return this.http.get<Imputation>(URL_BACKEND + `/imputation/date/${date}`);
+
+  }
+
   update(imputation: Imputation){
     return this.http.put(URL_BACKEND + `/imputation/${imputation.id}`, imputation);
   }

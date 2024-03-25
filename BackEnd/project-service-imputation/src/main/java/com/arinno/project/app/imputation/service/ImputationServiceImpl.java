@@ -1,5 +1,6 @@
 package com.arinno.project.app.imputation.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,29 +26,28 @@ public class ImputationServiceImpl implements IImputationService {
 	public List<Imputation> findByUser(User user) {
 		return (List<Imputation>) imputationDao.findByUser(user);
 	}
-	
-	@Override
-	@Transactional(readOnly = true)	
-	public List<Imputation> findByCompany(Company company) {
-		return (List<Imputation>) imputationDao.findByCompany(company);
-	}	
 
 	@Override
-	public Imputation findByIdAndCompany(Long id, Company company) {
-		return imputationDao.findByIdAndCompany(id, company);
-	}
+	public Imputation findByIdAndUser(Long id, User user) {
+		return imputationDao.findByIdAndUser(id, user);
+	}	
+	
+	@Override
+	public Imputation findByDateAndUser(Date date, User user) {
+		return imputationDao.findByDateAndUser(date, user);
+	}	
 
 	@Override
 	@Transactional
 	public Imputation save(Imputation imputation) {
 		return imputationDao.save(imputation);
 	}
-
+	
 	@Override
 	@Transactional
-	public void deleteByIdAndCompany(Long id, Company company) {
-		imputationDao.deleteByIdAndCompany(id, company);		
-	}
+	public void deleteByIdAndUser(Long id, User user) {
+		imputationDao.deleteByIdAndUser(id, user);		
+	}	
 	
 	@Transactional
 	public Company findCompanyByUsername(String name) {
@@ -58,6 +58,7 @@ public class ImputationServiceImpl implements IImputationService {
 	public User findUserByUsername(String name) {
 		return userFeign.findByUsername(name);
 	}
+
 	
 
 }

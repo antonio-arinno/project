@@ -1,14 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';;
 import { Imputation } from '@model/imputation';
-import { FormBuilder, 
-  FormControl, 
-  FormGroup,
-  Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { DateAdapter } from '@angular/material/core' ;
 import { ImputationService } from '@service/imputation.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, map, mergeMap, startWith, BehaviorSubject } from 'rxjs';
+import { Observable, map, mergeMap, startWith, BehaviorSubject, isEmpty } from 'rxjs';
 import { Project } from '@model/project';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { ProjectService } from '@service/project.service';
 import { ImputationItem } from '@model/imputation-item';
 
@@ -35,14 +34,17 @@ export class ImputationDetailComponent implements OnInit {
 
   projectControl = new FormControl();
   filteredProjects!: Observable<Project[]>;  
+  events: any;
 
 
   constructor(private imputationService: ImputationService, 
               private projectService: ProjectService,
               private fb: FormBuilder, 
               private activateRoute: ActivatedRoute, 
-              private router: Router) {           
+              private router: Router,
+              private dateAdapter: DateAdapter<any>) {           
     this.buildForm();
+ //   this.dateAdapter.setLocale('fr');   
     this.imputation = new Imputation();
   }   
   
@@ -56,8 +58,9 @@ export class ImputationDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.activateRoute.params.subscribe(params => {
-      let id = params['id']
-      if(id){
+      let id = params['id'];
+      const cmpDate = /\d{4}-\d{2}-\d{2}/;
+      if(!id.match(cmpDate)){
         this.imputationService.get(id).subscribe({
           next:(res: Imputation)=> {
             this.form.get('id')?.setValue(res.id);
@@ -67,9 +70,10 @@ export class ImputationDetailComponent implements OnInit {
           },
           error: (err: any) => console.log(err)
         });
+      }else{
+        this.form.get('date')?.setValue(id);
       }
-    });   
-    
+    });     
 
     this.filteredProjects = this.projectControl.valueChanges
       .pipe(
@@ -97,16 +101,6 @@ export class ImputationDetailComponent implements OnInit {
     imputationItem.project = event.option.value as Project;
     this.selectedImputationItem = imputationItem;
 
-
-/*    
-    if (this.form.get('time')?.value != 0){
-      let imputationItem = new ImputationItem();
-      imputationItem.project = event.option.value as Project;
-      imputationItem.time = this.form.get('time')?.value;
-      this.imputation.items.push(imputationItem);
-      this.imputationItem.next(this.imputation.items);
-    } 
-*/    
   }  
 
   update(event: Event): void {
@@ -161,7 +155,7 @@ export class ImputationDetailComponent implements OnInit {
   }        
 
   deleteImputationItem(id: number): void {
-    this.imputation.items = this.imputation.items.filter((item: ImputationItem) => id !== item.project.id);
+    this.imputation.items = this.imputation.items.filter((item: ImputationItem) => id !== item.id);
     this.imputationItem.next(this.imputation.items);
   }  
 
@@ -169,6 +163,31 @@ export class ImputationDetailComponent implements OnInit {
     this.selectedImputationItem.time = this.form.get('time')?.value;
     this.imputation.items.push(this.selectedImputationItem);
     this.imputationItem.next(this.imputation.items);    
+  }
+
+
+
+  dataChange() {
+    const date = `${this.form.get('date')?.value.getFullYear()}-${(this.form.get('date')?.value.getMonth()+1).toString().padStart(2, '0')}-${this.form.get('date')?.value.getDate().toString().padStart(2, '0')}`;
+    console.log('dateChange - ', date);
+    this.imputationService.getByDate(date).subscribe({
+      next:(res: Imputation)=> {
+        console.log(res);
+        if(res==null){
+ //         this.form.get('id')?.setValue(null);
+          this.imputation = new(Imputation);
+          this.form.get('id')?.setValue(this.imputation.id);
+          this.imputationItem.next(this.imputation.items);
+        }else{
+          this.form.get('id')?.setValue(res.id);
+          this.form.get('date')?.setValue(res.date);
+          this.imputation = res;
+          this.imputationItem.next(this.imputation.items);
+        }
+      },
+      error: (err: any) => console.log(err)
+    });
+
   }
 
 }

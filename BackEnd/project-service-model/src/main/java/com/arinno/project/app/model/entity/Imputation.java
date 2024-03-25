@@ -44,11 +44,12 @@ public class Imputation implements Serializable {
     @JoinColumn(name = "imputation_id")	
 	private List<ImputationItem> items;
     
+/*    
 	@JoinColumn(nullable = false)	
     @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
     @ManyToOne(fetch = FetchType.LAZY)	
     private Company company;	
-		
+*/		
 	public Long getId() {
 		return id;
 	}
@@ -81,13 +82,6 @@ public class Imputation implements Serializable {
 		this.items = items;
 	}
 	
-	public Company getCompany() {
-		return company;
-	}
-
-	public void setCompany(Company company) {
-		this.company = company;
-	}
 
 	public Integer getTotal() {
 		Integer total = 0;

@@ -6,6 +6,8 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.text.ParseException;
+import java.text.SimpleDateFormat; 
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,8 @@ import com.arinno.project.app.model.entity.Company;
 import com.arinno.project.app.model.entity.Imputation;
 import com.arinno.project.app.model.entity.User;
 
+import feign.form.multipart.Output;
+
 @RestController
 public class ImputationController {
 
@@ -32,21 +36,35 @@ public class ImputationController {
 	private IImputationService imputationService;
 	
 	@GetMapping("/")	
-	public List<Imputation> list(@RequestHeader(value="Authorization") String auth){
-//		return imputationService.findByCompany(getCompany(auth));		
+	public List<Imputation> list(@RequestHeader(value="Authorization") String auth){	
 		return imputationService.findByUser(getUser(auth));	
 	}
 	
 	@GetMapping("/{id}")
-	public Imputation project(@PathVariable Long id, @RequestHeader(value="Authorization") String auth) {
-		return imputationService.findByIdAndCompany(id, getCompany(auth));
+	public Imputation imputation(@PathVariable Long id, @RequestHeader(value="Authorization") String auth) {
+		return imputationService.findByIdAndUser(id, getUser(auth));
+	}
+	
+	
+	@GetMapping("/date/{dateString}")
+	public Imputation imputationByDate(@PathVariable String dateString, @RequestHeader(value="Authorization") String auth) {		 
+		Date date = null;
+		System.out.println(date);
+		System.out.println(dateString);
+		try {
+			date = new SimpleDateFormat("yyyy-MM-dd").parse(dateString);
+			System.out.println(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}  	
+		System.out.println(date);
+		return imputationService.findByDateAndUser(date, getUser(auth));
 	}
 	
 	@PostMapping("/")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Imputation create(@RequestBody Imputation imputation, @RequestHeader(value="Authorization") String auth) {
 		imputation.setUser(getUser(auth));
-		imputation.setCompany(getCompany(auth));
 		return imputationService.save(imputation);
 	}
 	
@@ -58,7 +76,6 @@ public class ImputationController {
         for ( LocalDate day = LocalDate.parse("2023-01-01"); day.getYear() < 2024 ; day = day.plusDays(1)) {
     		Imputation imputation = new Imputation();
     		imputation.setUser(getUser(auth));
-    		imputation.setCompany(getCompany(auth));
     		Date date = Date.from(day.atStartOfDay(defaultZoneId).toInstant());
     		imputation.setDate(date);
     		imputationService.save(imputation);
@@ -70,7 +87,8 @@ public class ImputationController {
 	@PutMapping("/{id}")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Imputation edit(@RequestBody Imputation imputation, @PathVariable Long id, @RequestHeader(value="Authorization") String auth) {
-		Imputation imputationDb = imputationService.findByIdAndCompany(id, getCompany(auth));
+//		Imputation imputationDb = imputationService.findByIdAndCompany(id, getCompany(auth));
+		Imputation imputationDb = imputationService.findByIdAndUser(id, getUser(auth));
 		imputationDb.setDate(imputation.getDate());
 		imputationDb.setItems(imputation.getItems());
 		return imputationService.save(imputationDb);
@@ -80,7 +98,7 @@ public class ImputationController {
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable Long id, @RequestHeader(value="Authorization") String auth) {
-		imputationService.deleteByIdAndCompany(id, getCompany(auth));
+		imputationService.deleteByIdAndUser(id, getUser(auth));
 	}
 	
 	private Company getCompany(String auth) {

@@ -19,7 +19,11 @@ export class SideNavComponent {
     {
       title: 'imputation',
       link: 'pvt/imputation/imputation',
-    }
+    },
+    {
+      title: 'imputation2',
+      link: 'pvt/imputation2/imputation2',
+    }    
   ];  
 
 }

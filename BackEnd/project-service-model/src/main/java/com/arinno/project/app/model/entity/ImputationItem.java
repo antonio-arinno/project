@@ -21,8 +21,7 @@ public class ImputationItem implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;	
-	
-	
+		
 	@JoinColumn(nullable = false)	
     @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })	
 	@ManyToOne(fetch = FetchType.LAZY)

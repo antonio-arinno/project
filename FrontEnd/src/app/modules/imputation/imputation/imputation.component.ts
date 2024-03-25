@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import * as moment from 'moment'
 
 
@@ -7,13 +7,14 @@ import { Imputation } from '@model/imputation';
 import { Router } from '@angular/router';  
 import { ImputationService } from '@service/imputation.service';
 
+
 @Component({
   selector: 'app-imputation',
   templateUrl: './imputation.component.html',
   styleUrls: ['./imputation.component.scss']
 })
-export class ImputationComponent implements OnInit {
-
+export class ImputationComponent {
+ 
   week: any = [
     "Lunes",
     "Martes",
@@ -24,52 +25,61 @@ export class ImputationComponent implements OnInit {
     "Domingo"
   ];
 
-
   monthSelect!: any[];
   dateSelect: any;
   dateValue: any;
 
+  imputations: Imputation[] = [];
 
-  constructor() {
+  constructor(private imputationService: ImputationService, private router: Router) {
 
   }
 
   ngOnInit(): void {
-    this.getDaysFromDate(11, 2020)
+    this.imputationService.getAll().subscribe({
+      next: (res: Imputation[]) => {
+        this.imputations = res;
+        this.getDaysFromDate(1, 2024);
+      },
+      error: (err: any) => console.log(err),
+    });    
   }
 
   getDaysFromDate(month: number, year: number) {
-
     const startDate = moment.utc(`${year}/${month}/01`)
     const endDate = startDate.clone().endOf('month')
     this.dateSelect = startDate;
-
     const diffDays = endDate.diff(startDate, 'days', true)
     const numberDays = Math.round(diffDays);
-
     const arrayDays = Object.keys([...Array(numberDays)]).map((a: any) => {
       a = parseInt(a) + 1;
       const dayObject = moment(`${year}-${month}-${a}`);
+      var total = 0;
+      let id = null;
+      var color = null;
+      this.imputations.forEach(function (imputation) {
+        const dayObject2 = moment(imputation.date);
+        if ( dayObject.diff(dayObject2) == 0 ) {
+          total = imputation.total;
+          id = imputation.id;
+          if(total == 8){
+//            color = '#0f0';
+//            color = '#388e3c';
+            color = '#4caf50';
+          }
+        }
+      });
       return {
         name: dayObject.format("dddd"),
         value: a,
-        indexWeek: dayObject.isoWeekday()
+        indexWeek: dayObject.isoWeekday(),
+        total: total,
+        color: color,
+        id: id
       };
     });
-
     this.monthSelect = arrayDays;
-
-    console.log(this.monthSelect);
-    const prueba = this.monthSelect.map((x:any) => {
-      return {
-        name : x.name
-      }
-    })
-
-    console.log(prueba);
-
   }
-
 
   changeMonth(flag: number) {
     if (flag < 0) {
@@ -81,13 +91,21 @@ export class ImputationComponent implements OnInit {
     }
   }
 
-  clickDay(day: { value: any; }) {
+  clickDay(day: { value: any; id:any}) {
+/*
     const monthYear = this.dateSelect.format('YYYY-MM')
-    const parse = `${monthYear}-${day.value}`
-    const objectDate = moment(parse)
+    const parse = `${monthYear}-${day.value.toString().padStart(2, '0')}`;
+    const objectDate = moment(parse);
     this.dateValue = objectDate;
+*/    
 
-
+    if(day.id != null){
+      this.router.navigate(['/pvt/imputation/imputation-detail', day.id])
+    }else{
+      const monthYear = this.dateSelect.format('YYYY-MM')
+      const parse = `${monthYear}-${day.value.toString().padStart(2, '0')}`;
+      this.router.navigate(['/pvt/imputation/imputation-detail', parse]);
+    }
+    
   }
-
 }

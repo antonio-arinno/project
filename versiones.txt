@@ -1,0 +1,7 @@
+imagen
+prueba-angular:v1	->	return this.http.get<PeriodicElement[]>('http://localhost:8001/listar');
+prueba-angular:v2	->	return this.http.get<PeriodicElement[]>('http://servicio-productos:8001/listar');
+prueba-angular:v3	->	return this.http.get<PeriodicElement[]>('http://172.22.0.2:8001/listar');
+
+
+

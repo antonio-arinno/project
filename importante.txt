@@ -2,6 +2,13 @@
 
 angular
 ng build
+
+docker build . -t service-angular-server:v1
+
+docker run -d -p 80:80 --name project-angular project-angular:v1
+
+docker run -d -p 80:80 -v c:/work/projects/project/frontend/dist/project:/usr/share/nginx/html --network projectfront --name service-angular-server service-angular-server:v1
+
 docker run -d -p 80:80 -v c:/work/projects/project/frontend/dist/project:/usr/share/nginx/html --network projectfront --name service-angular-server nginx:alpine
 
 docker run -d -p 8080:80 -v c:/work/projects/myApp/dist/my-app:/usr/share/nginx/html nginx:alpine
@@ -9,7 +16,7 @@ docker run -d -p 8080:80 -v c:/work/projects/myApp/dist/my-app:/usr/share/nginx/
 
 mvnw clean package [-DskipTests]
 (crear Dockerfile)
-docker buid . -t [imagen:version]
+docker build . -t [imagen:version]
 docker network create [red]
 docker run -d -p port_ext:port_int --name [contendor] --network [red] imagen:version
 docker network connect [red] [container]
@@ -28,3 +35,11 @@ https://www.udemy.com/course/microservicios-con-spring-boot-y-spring-cloud/learn
 
 https://www.returngis.net/2020/12/como-funcionan-las-redes-en-docker/
 docker network connect returngis-net container-1
+
+docker network connect projectfront service-gateway-server
+
+
+
+docker run -d -p 8090:8090 --name service-gateway-server --network project service-gateway-server:v1
+
+docker exec -it [contenedor] /bin/bash  o /bin/sh
