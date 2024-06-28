@@ -1,0 +1,79 @@
+<mat-card>
+
+<h1>Register</h1>
+
+<h2>{{responseMsg}}</h2>
+
+<mat-grid-list cols="2" rowHeight="100px" gutterSize="10px" [formGroup]="registerForm">
+
+    <mat-grid-tile>
+        <mat-form-field appearance="fill" color="accent">
+            <mat-label>First Name</mat-label>
+            <input matInput formControlName="firstName">
+            @if(this.FirstName.invalid){
+                <mat-error>{{getFirstNameErrors()}}</mat-error>    
+            }
+        </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+        <mat-form-field appearance="fill" color="accent">
+            <mat-label>Last Name</mat-label>
+            <input matInput formControlName="lastName">
+            @if (this.LastName.invalid) {
+                <mat-error>{{getLastNameErrors()}}</mat-error>    
+            }
+        </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+        <mat-form-field appearance="fill" color="accent">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email">
+            @if (this.Email.invalid) {
+                <mat-error>{{getEmailErrors()}}</mat-error>    
+            }
+        </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+        <mat-form-field appearance="fill" color="accent">
+            <mat-label>Password</mat-label>
+            <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+            <button mat-icon-button matSuffix (click)="hide = !hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            @if (this.Password.invalid) {
+                <mat-error>{{getPasswordErrors()}}</mat-error>    
+            }
+        </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+        <mat-form-field appearance="fill" color="accent">
+            <mat-label>Repeat Password</mat-label>
+            <input matInput [type]="hide ? 'password' : 'text'" formControlName="rpassword">
+            <button mat-icon-button matSuffix (click)="hide = !hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            @if (this.RPassword.hasError('rpassword')) {
+                <mat-error>Must be same as Password.</mat-error>    
+            }
+        </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile colspan="2">
+        <button mat-flat-button color="accent" class="create-account-btn" (click)="register()"
+                [disabled]="registerForm.invalid">
+            Create Account
+        </button>
+    </mat-grid-tile>
+
+</mat-grid-list>
+
+<div class="login-link">
+    <span>Already have an account?</span>
+    <button mat-stroked-button color="accent" routerLink="/login">Log in</button>
+</div>
+
+</mat-card>

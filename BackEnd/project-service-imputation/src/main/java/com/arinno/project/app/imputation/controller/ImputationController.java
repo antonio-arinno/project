@@ -87,11 +87,17 @@ public class ImputationController {
 	@PutMapping("/{id}")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Imputation edit(@RequestBody Imputation imputation, @PathVariable Long id, @RequestHeader(value="Authorization") String auth) {
-//		Imputation imputationDb = imputationService.findByIdAndCompany(id, getCompany(auth));
+/*
 		Imputation imputationDb = imputationService.findByIdAndUser(id, getUser(auth));
+		imputationService.deleteByIdAndUser(id, getUser(auth));
 		imputationDb.setDate(imputation.getDate());
 		imputationDb.setItems(imputation.getItems());
 		return imputationService.save(imputationDb);
+*/
+		imputationService.deleteByIdAndUser(id, getUser(auth));
+		imputation.setUser(getUser(auth));
+		return imputationService.save(imputation);
+		
 	}
 	
 	

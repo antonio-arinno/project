@@ -43,3 +43,5 @@ docker network connect projectfront service-gateway-server
 docker run -d -p 8090:8090 --name service-gateway-server --network project service-gateway-server:v1
 
 docker exec -it [contenedor] /bin/bash  o /bin/sh
+
+https://github.com/mgalante/curso-angular/tree/master/prueba

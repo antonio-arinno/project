@@ -26,6 +26,7 @@ import jakarta.persistence.UniqueConstraint;
         @UniqueConstraint(columnNames = {"date" , "user_id"})})
 public class Imputation implements Serializable {
 
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;	
@@ -43,13 +44,7 @@ public class Imputation implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "imputation_id")	
 	private List<ImputationItem> items;
-    
-/*    
-	@JoinColumn(nullable = false)	
-    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-    @ManyToOne(fetch = FetchType.LAZY)	
-    private Company company;	
-*/		
+    	
 	public Long getId() {
 		return id;
 	}
@@ -82,7 +77,6 @@ public class Imputation implements Serializable {
 		this.items = items;
 	}
 	
-
 	public Integer getTotal() {
 		Integer total = 0;
 		for(ImputationItem item: items) {
@@ -90,6 +84,12 @@ public class Imputation implements Serializable {
 		}
 		return total;
 	}
+	
+	@Override
+	public String toString() {
+		return "Imputation [id=" + id + ", user=" + user + ", date=" + date + ", items=" + items + "]";
+	}
+
 
 	private static final long serialVersionUID = -20855515565311523L;	
 

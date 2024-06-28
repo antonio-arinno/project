@@ -20,7 +20,7 @@ import jakarta.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "projects", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"company_id" , "name"})})
+        @UniqueConstraint(columnNames = {"company_id" ,"product_id", "name"})})
 public class Project implements Serializable {
 	
 	@Id

@@ -11,8 +11,3 @@ INSERT INTO users_roles (user_id, roles_id) VALUES(1,1);
 INSERT INTO users_roles (user_id, roles_id) VALUES(2,2);
 INSERT INTO users_roles (user_id, roles_id) VALUES(2,1);
 
-
-INSERT INTO products (name, description, create_at, company_id) VALUES('RC', 'RC....', NOW(), 1);
-INSERT INTO products (name, description, create_at, company_id) VALUES('ALM', 'ALM....', NOW(), 1);
-INSERT INTO products (name, description, create_at, company_id) VALUES('ALM_2', 'ALM compañia 2..', NOW(), 2);
-

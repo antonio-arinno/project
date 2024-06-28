@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.arinno.project.app.model.entity.Company;
+//import com.arinno.project.app.model.entity.Company;
 import com.arinno.project.app.model.entity.Imputation;
 import com.arinno.project.app.model.entity.User;
 
@@ -18,7 +18,6 @@ public interface ImputationDao extends CrudRepository<Imputation, Long> {
 	public Imputation findByDateAndUser(Date date, User user);
 	
 	public void deleteByIdAndUser(Long id, User user);
-
 
 	
 }

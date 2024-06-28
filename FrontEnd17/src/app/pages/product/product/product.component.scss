@@ -1,0 +1,13 @@
+@import "@shared/theme.scss";
+table {
+    width: 100%;
+  }
+
+.mat-mdc-row {
+  cursor: pointer;
+}
+
+.mat-mdc-row:hover {
+  background-color: $light-accent-100;
+}
+

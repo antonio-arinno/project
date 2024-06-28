@@ -1,0 +1,95 @@
+<mat-card>
+    <mat-card-title>Imputation</mat-card-title>
+    <mat-card-content>
+      <form [formGroup]="form">              
+
+        <mat-form-field>
+          <input type="text" matInput placeholder="Id" formControlName="id">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput [matDatepicker]="picker" (dateChange)="dataChange()" placeholder="Choose a date" formControlName="date">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        
+        <table class="full-width" cellspacing="0">
+          <tr>
+          <td>
+            <mat-form-field class="full-width">
+              <mat-label>Add Project</mat-label>
+              <input type="text" matInput 
+                                [formControl]="projectControl" 
+                                [matAutocomplete]="auto">
+              <mat-autocomplete #auto="matAutocomplete" 
+                                [displayWith]="displayFn"
+                                (optionSelected)="selectProject($event)">
+                <mat-option *ngFor="let project of filteredProjects | async" [value]="project">
+                  {{project.name}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>            
+          </td>
+          <td>
+            <mat-form-field class="full-width">
+              <input matInput type="number" pattern=[1-8] placeholder="Time" formControlName="time">
+            </mat-form-field>
+          </td>
+          <td>
+            <button mat-raised-button color="accent" [disabled]="form.get('time')?.value == null || !form.get('time')?.dirty || form.get('project')?.dirty || !form.get('time')?.valid " (click)="addItem()">
+              Add
+            </button>
+          </td>
+          </tr>
+        </table>
+        
+        <table mat-table [dataSource]="imputationItem$" class="mat-elevation-z8" >
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> Id </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+          </ng-container>
+          <ng-container matColumnDef="project">
+            <th mat-header-cell *matHeaderCellDef> Project </th>
+            <td mat-cell *matCellDef="let element"> {{element.project.name}} </td>
+          </ng-container>
+          <ng-container matColumnDef="time">
+            <th mat-header-cell *matHeaderCellDef> Time </th>
+            <td mat-cell *matCellDef="let element"> {{element.time}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef> Delete </th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-raised-button color="warn"
+                  (click)="deleteImputationItem(element.id)">
+                    Delete
+                </button>
+            </td>
+          </ng-container>           
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+  
+        <mat-card-footer>
+          @if (!form.get('id')?.value){
+            <button type="submit" (click)="create($event)" mat-flat-button color="accent  mt-3" [disabled]="form.invalid">Save</button>
+          }@else{
+            <div class="space-between">
+              <button type="submit" (click)="update($event)" mat-flat-button color="accent  mt-3" [disabled]="form.invalid">Update</button>   
+              <button type="submit" (click)="delete($event)" mat-flat-button color="warn  mt-3" [disabled]="form.invalid">Delete</button>  
+            </div>      
+          }
+
+          @if (error) {
+            <div>
+                <mat-error>{{ error }}</mat-error>
+                <mat-error>{{ message }}</mat-error>
+                <mat-error>{{ message2 }}</mat-error>
+            </div>
+            }
+        </mat-card-footer>
+
+      </form>
+    </mat-card-content>
+</mat-card>
+

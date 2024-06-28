@@ -27,6 +27,7 @@ import jakarta.persistence.UniqueConstraint;
         @UniqueConstraint(columnNames = {"company_id" , "name"})})
 public class Product implements Serializable {
 
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -39,19 +40,23 @@ public class Product implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date createAt;
 
-/*
-	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+//	@JsonIgnoreProperties(value= {"cliente"})
+	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler", "product" })
+	@OneToMany(fetch = FetchType.LAZY, mappedBy="product", cascade = CascadeType.ALL)
+//    @JoinColumn(name = "product_id")	
 	private List<Project> projects;	
-*/
+
 	
 	@JoinColumn(nullable = false)	
     @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
     @ManyToOne(fetch = FetchType.LAZY)	
     private Company company;		
 	
+	
 	public Product() {
-//		this.projects = new ArrayList<>();
+		
+		this.projects = new ArrayList<>();
 	}
 		
 	public Long getId() {
@@ -79,6 +84,15 @@ public class Product implements Serializable {
 	public void setCreateAt(Date createAt) {
 		this.createAt = createAt;
 	}
+	
+	
+	public List<Project> getProjects() {
+		return projects;
+	}
+
+	public void setProjects(List<Project> projects) {
+		this.projects = projects;
+	}	
 
 	public Company getCompany() {
 		return company;

@@ -53,6 +53,13 @@ public class ImputationItem implements Serializable {
 		this.time = time;
 	}
 
+	
+	@Override
+	public String toString() {
+		return "ImputationItem [id=" + id + ", project=" + project + ", time=" + time + "]";
+	}
+
+
 	private static final long serialVersionUID = 4943364977822193423L;
 
 }
