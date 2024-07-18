@@ -51,6 +51,7 @@ public class ProductController {
 		Product productDb = productService.findByIdAndCompany(id, getCompany(auth));
 		productDb.setName(product.getName());
 		productDb.setDescription(product.getDescription());
+		productDb.setResponsible(product.getResponsible());
 		return productService.save(productDb);
 	}	
 	

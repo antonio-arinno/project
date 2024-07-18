@@ -10,35 +10,14 @@
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
 
-          <button mat-flat-button color="accent" class="m-3" (click)="addItemForm()">
+          <button mat-flat-button color="accent" class="m-3" (click)="addItemdfForm()">
             Add
           </button>
 
           <strong> Time: {{ totalTime }} </strong>
 
           <mat-table [dataSource]="dataSourceItems" class="mat-elevation-z8">
-            <ng-container formArrayName="imputationItemForm">
-<!--
-              <ng-container matColumnDef="product">
-                <mat-header-cell *matHeaderCellDef> Product </mat-header-cell>
-                <mat-cell *matCellDef="let element;" [formGroup]="element">
-                  <mat-form-field>
-                    <mat-select formControlName="productId">
-
-                      @for (product of products(); track product) {
-                        <mat-optgroup [label]="product.name">
-
-                          @for (project of product.projects; track project) {
-                            <mat-option [value]="project.id">{{project.name}}</mat-option>
-                          }
-                        </mat-optgroup>
-                      }
-
-                    </mat-select>
-                  </mat-form-field>
-                </mat-cell>
-              </ng-container>
--->              
+            <ng-container formArrayName="imputationItemForm">            
               <ng-container matColumnDef="project">
                 <mat-header-cell *matHeaderCellDef> Project </mat-header-cell>
                 <mat-cell *matCellDef="let element;" [formGroup]="element">

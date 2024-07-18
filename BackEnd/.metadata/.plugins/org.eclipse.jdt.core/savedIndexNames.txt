@@ -489,7 +489,6 @@ INDEX VERSION 1.132+C:\Work\Projects\Project\BackEnd\.metadata\.plugins\org.ecli
 29488244.index
 2753886262.index
 1435775923.index
-2297134071.index
 4205913811.index
 1231817560.index
 2421937761.index

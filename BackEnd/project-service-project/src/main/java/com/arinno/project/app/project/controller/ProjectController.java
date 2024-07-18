@@ -50,6 +50,7 @@ public class ProjectController {
 		projectDb.setName(project.getName());
 		projectDb.setDescription(project.getDescription());
 		projectDb.setProduct(project.getProduct());
+		projectDb.setResponsible(project.getResponsible());
 		return projectService.save(projectDb);
 	}
 	

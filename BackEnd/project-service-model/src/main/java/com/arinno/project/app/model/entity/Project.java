@@ -2,6 +2,7 @@ package com.arinno.project.app.model.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -12,6 +13,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
@@ -39,6 +41,15 @@ public class Project implements Serializable {
     @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
     @ManyToOne(fetch = FetchType.LAZY)	
 	private Product product;
+	
+	@JoinColumn(nullable = false)	
+    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+    @ManyToOne(fetch = FetchType.LAZY)		
+	private User responsible;	
+	
+	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+	@ManyToMany(fetch = FetchType.LAZY)
+	private List<User> contributors;
 	
 	@JoinColumn(nullable = false)	
     @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
@@ -83,6 +94,22 @@ public class Project implements Serializable {
 
 	public void setProduct(Product product) {
 		this.product = product;
+	}
+	
+	public User getResponsible() {
+		return responsible;
+	}
+
+	public void setResponsible(User responsible) {
+		this.responsible = responsible;
+	}	
+
+	public List<User> getContributors() {
+		return contributors;
+	}
+
+	public void setContributors(List<User> contributors) {
+		this.contributors = contributors;
 	}
 
 	public Company getCompany() {

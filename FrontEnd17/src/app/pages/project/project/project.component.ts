@@ -19,7 +19,7 @@ export class ProjectComponent {
   router = inject(Router);
 
   projects: WritableSignal<Project[]> = signal([]);
-  displayedColumns: string[] = ['id', 'name', 'description', 'edit'];
+  displayedColumns: string[] = ['name', 'description', 'edit'];
   dataSource = this.projects;
 
   error!: string;

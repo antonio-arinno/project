@@ -39,14 +39,15 @@ public class Product implements Serializable {
 	@Column(name = "create_at")
 	@Temporal(TemporalType.DATE)
 	private Date createAt;
+	
+	@JoinColumn(nullable = false)	
+    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+    @ManyToOne(fetch = FetchType.LAZY)		
+	private User responsible;
 
-
-//	@JsonIgnoreProperties(value= {"cliente"})
 	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler", "product" })
 	@OneToMany(fetch = FetchType.LAZY, mappedBy="product", cascade = CascadeType.ALL)
-//    @JoinColumn(name = "product_id")	
 	private List<Project> projects;	
-
 	
 	@JoinColumn(nullable = false)	
     @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
@@ -54,8 +55,7 @@ public class Product implements Serializable {
     private Company company;		
 	
 	
-	public Product() {
-		
+	public Product() {	
 		this.projects = new ArrayList<>();
 	}
 		
@@ -78,14 +78,23 @@ public class Product implements Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	
 	public Date getCreateAt() {
 		return createAt;
 	}
+	
 	public void setCreateAt(Date createAt) {
 		this.createAt = createAt;
 	}
 	
-	
+	public User getResponsible() {
+		return responsible;
+	}
+
+	public void setResponsible(User responsible) {
+		this.responsible = responsible;
+	}
+
 	public List<Project> getProjects() {
 		return projects;
 	}

@@ -5,5 +5,5 @@ export class User {
     name!: string;
     email!: string;
     roles: string[]=[];
-    company: string = 'Ariño Company';
+    company!: string;
   }

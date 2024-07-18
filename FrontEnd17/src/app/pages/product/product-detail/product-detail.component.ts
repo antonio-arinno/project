@@ -1,30 +1,45 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormControl } from '@angular/forms';
+
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { ProductService } from '@core/services/product.service';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+
 import { ActivatedRoute, Router } from '@angular/router';
+
+import { Observable, map, mergeMap, startWith } from 'rxjs';
+
+import { UserService } from '@core/services/user.service';
+import { ProductService } from '@core/services/product.service';
+
 import { Product } from '@core/model/product';
+import { User } from '@core/model/user';
 
 
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [MatCardModule, MatInputModule, MatButtonModule, ReactiveFormsModule],
+  imports: [CommonModule, MatCardModule, MatInputModule, MatButtonModule, ReactiveFormsModule, MatAutocompleteModule],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.scss'
 })
 export class ProductDetailComponent {
 
   productService = inject(ProductService);
+  userService = inject(UserService);
   router = inject(Router);
   activateRoute = inject(ActivatedRoute);
   fb = inject(FormBuilder);
 
   form!: FormGroup;
   product!: Product;
+
+  filteredUsers: Observable<User[]> | undefined;  
+
   error!: string;
   message!: string;
   message2!: string;
@@ -53,19 +68,43 @@ export class ProductDetailComponent {
           next:(res: Product)=> {
             this.form.get('id')?.setValue(res.id);
             this.form.get('name')?.setValue(res.name);
-            this.form.get('description')?.setValue(res.description);         
+            this.form.get('description')?.setValue(res.description);    
+            this.form.get('responsible')?.setValue(res.responsible);
           },
           error: (err: any) => console.log(err)
         });
+      }else{
+        this.product = new Product();
       }
-    })  
+    });
+
+    this.filteredUsers = this.form.get('responsible')?.valueChanges
+    .pipe(
+      startWith(''),
+      map(value => typeof value === 'string' ? value : value.description),
+      mergeMap(value => value ? this._filter(value) : this._getAll())
+    );     
+  }
+
+  private _getAll(): Observable<User[]> {    
+    return this.userService.getAll();
+  }  
+
+  private _filter(value: string): Observable<User[]> {
+    const filterValue = value.toLowerCase();
+    return this.userService.getSelection(filterValue);
+  }    
+
+  displayFn(user: User): string {
+    return user && user.name ? user.name : '';
   }
 
   private buildForm(){
     this.form = this.fb.group({
       id: [''],
       name: ['', [Validators.required]],
-      description: ['', [Validators.required]]
+      description: ['', [Validators.required]],
+      responsible: ['', [Validators.required]]
     });  
   }  
 

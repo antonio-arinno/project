@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Value"/>
-    <fullyQualifiedTypeName name="org.springframework.core.env.Environment"/>
-    <fullyQualifiedTypeName name="javax.crypto.SecretKey"/>
-    <fullyQualifiedTypeName name="java.util.Base64"/>
     <fullyQualifiedTypeName name="io.jsonwebtoken.Jwts"/>
     <fullyQualifiedTypeName name="java.util.Collection"/>
     <fullyQualifiedTypeName name="org.springframework.security.core.GrantedAuthority"/>
@@ -38,7 +34,6 @@
     <fullyQualifiedTypeName name="org.json.JSONException"/>
     <fullyQualifiedTypeName name="org.apache.tomcat.util.json.JSONParser"/>
     <fullyQualifiedTypeName name="jakarta.persistence.ManyToOne"/>
-    <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
     <fullyQualifiedTypeName name="com.arinno.project.app.util.service.UtilImpl"/>
     <fullyQualifiedTypeName name="org.springframework.cloud.openfeign.FeignClient"/>
     <fullyQualifiedTypeName name="com.arinno.project.app.product.service.IUserFeign"/>
@@ -52,7 +47,6 @@
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PutMapping"/>
     <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="jakarta.persistence.JoinColumn"/>
-    <fullyQualifiedTypeName name="com.arinno.project.app.model.entity.User"/>
     <fullyQualifiedTypeName name="java.util.Locale"/>
     <fullyQualifiedTypeName name="java.time.LocalDate"/>
     <fullyQualifiedTypeName name="org.springframework.scheduling.quartz.LocalDataSourceJobStore"/>
@@ -60,4 +54,10 @@
     <fullyQualifiedTypeName name="java.util.Date"/>
     <fullyQualifiedTypeName name="feign.form.multipart.Output"/>
     <fullyQualifiedTypeName name="java.lang.System"/>
+    <fullyQualifiedTypeName name="org.springframework.stereotype.Service"/>
+    <fullyQualifiedTypeName name="com.arinno.project.app.user.repository.UserDao"/>
+    <fullyQualifiedTypeName name="com.arinno.project.app.user.service.IUserService"/>
+    <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
+    <fullyQualifiedTypeName name="com.arinno.project.app.model.entity.User"/>
+    <fullyQualifiedTypeName name="net.minidev.json.JSONObject"/>
 </qualifiedTypeNameHistroy>
