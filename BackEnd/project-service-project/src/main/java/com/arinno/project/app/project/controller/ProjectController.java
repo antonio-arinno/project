@@ -28,7 +28,9 @@ public class ProjectController {
 	
 	@GetMapping("/")	
 	public List<Project> list(@RequestHeader(value="Authorization") String auth){
-		return projectService.findByCompany(getCompany(auth));		
+		return projectService.findByCompany(getCompany(auth));
+//		return projectService.findByStatusNotProduction();
+		
 	}
 	
 	@GetMapping("/{id}")
@@ -39,7 +41,7 @@ public class ProjectController {
 	@PostMapping("/")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Project create(@RequestBody Project project, @RequestHeader(value="Authorization") String auth) {
-		project.setCompany(getCompany(auth));
+		project.setCompany(getCompany(auth));	
 		return projectService.save(project);
 	}
 	
@@ -50,7 +52,9 @@ public class ProjectController {
 		projectDb.setName(project.getName());
 		projectDb.setDescription(project.getDescription());
 		projectDb.setProduct(project.getProduct());
+		projectDb.setStatus(project.getStatus());
 		projectDb.setResponsible(project.getResponsible());
+		projectDb.setContributors(project.getContributors());
 		return projectService.save(projectDb);
 	}
 	

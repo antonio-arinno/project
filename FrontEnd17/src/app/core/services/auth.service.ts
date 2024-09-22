@@ -3,6 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { User } from '@core/model/user';
 import { URL_BACKEND } from '@shared/config';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -51,6 +52,7 @@ export class AuthService {
   saveUser(accessToken: string): void {
     let payload = this.getTokenData(accessToken);
     this._user = new User();
+    this._user.id = payload.id;
     this._user.name = payload.name;
     this._user.email = payload.email;
     this._user.username = payload.user_name;

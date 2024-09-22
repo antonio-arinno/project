@@ -110,6 +110,29 @@ public class Product implements Serializable {
 	public void setCompany(Company company) {
 		this.company = company;
 	}
+	
+	
+	public Integer getTime() {
+		Integer time = 0;
+		if (projects != null){
+			for(Project project: projects) {
+				time += project.getTime();
+			}
+		}
+		return time;
+	}		
+/*	
+	public Integer getCountProjects() {
+		return projects.size();
+	}
+*/	
+	@Override
+	public String toString() {
+		return "Product [id=" + id + ", name=" + name + ", description=" + description + ", createAt=" + createAt
+				+ ", responsible=" + responsible + ", projects=" + projects + ", company=" + company + "]";
+	}
+
+
 
 	private static final long serialVersionUID = -7039319616483158134L;
 }

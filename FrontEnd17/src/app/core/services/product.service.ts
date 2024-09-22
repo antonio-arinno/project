@@ -11,9 +11,13 @@ export class ProductService {
 
   private http = inject(HttpClient);
 
-  getAll(){
+   getAll(){
 //    return firstValueFrom(this.http.get<Product[]>(URL_BACKEND + '/product/'));
     return this.http.get<Product[]>(URL_BACKEND + '/product/');
+  }
+
+  getByContributor(id: number){
+    return this.http.get<Product[]>(URL_BACKEND + `/product/contributor/${id}`);
   }
 
   get(id: number){

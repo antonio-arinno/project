@@ -14,6 +14,10 @@ export const PRIVATE_ROUTES: Routes = [
         {
         path: 'product',
         loadChildren: () => import('@pages/product/product.routing').then(m => m.PRODUCT_ROUTES)
+        },
+        {
+        path: 'dashboard',
+        loadChildren: () => import('@pages/dashboard/dashboard.routing').then(m => m.DASHBOARD_ROUTES)
         }
     ]}
 ];

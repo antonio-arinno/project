@@ -19,7 +19,7 @@ export class ProductComponent implements OnInit {
   router = inject(Router);
 
   products: WritableSignal<Product[]> = signal([]);
-  displayedColumns: string[] = ['name', 'description'];
+  displayedColumns: string[] = ['name', 'description', 'countContributors', 'countProjects', 'time'];
   dataSource = this.products;
 
 /*
@@ -31,7 +31,11 @@ export class ProductComponent implements OnInit {
   ngOnInit(): void {
     this.productService.getAll().subscribe({
       next: (res: Product[]) => {
-        this.products.set(res);
+ //       this.products.set(res);
+        let productsTmp = res.map(function (product){
+          return Product.fromObject(product);
+        });
+        this.products.set(productsTmp);
       },
       error: (err: any) => console.log(err),
     });

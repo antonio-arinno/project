@@ -57,7 +57,6 @@ public class ImputationController {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}  	
-		System.out.println(date);
 		return imputationService.findByDateAndUser(date, getUser(auth));
 	}
 	

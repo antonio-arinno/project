@@ -19,6 +19,10 @@ export class SideNavComponent {
 
   sideNavContent: SideNavItem[] = [
     {
+      title: 'dashboard',
+      link: 'pvt/dashboard',
+    }, 
+    {
       title: 'imputation',
       link: 'pvt/imputation',
     }, 

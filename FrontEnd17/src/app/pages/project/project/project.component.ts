@@ -19,7 +19,7 @@ export class ProjectComponent {
   router = inject(Router);
 
   projects: WritableSignal<Project[]> = signal([]);
-  displayedColumns: string[] = ['name', 'description', 'edit'];
+  displayedColumns: string[] = ['name', 'description', 'contributors', 'time', 'edit'];
   dataSource = this.projects;
 
   error!: string;
@@ -29,7 +29,17 @@ export class ProjectComponent {
   ngOnInit(): void {
     this.projectService.getAll().subscribe({
       next: (res: Project[]) => {
-        this.projects.set(res);
+//        this.projects.set(res);
+        let contributors3: Array<String> = [];
+        contributors3.push('222');
+        console.log(contributors3.length);
+
+        let projectsTmp = res.map(function (project){
+          return Project.fromObject(project);
+        });
+        this.projects.set(projectsTmp);
+
+
       },
       error: (err: any) => {
         this.error = err.error.error;

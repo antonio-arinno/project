@@ -17,9 +17,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 
-
+import { User } from '@core/model/user';
+import { Company } from '@core/model/company';
 
 import { AuthService } from '@core/services/auth.service';
+import { CompanyService } from '@core/services/company.service';
 
 @Component({
   selector: 'app-register',
@@ -35,8 +37,13 @@ export class RegisterComponent {
   registerForm!: FormGroup;
 
   private authService = inject(AuthService);
+  private companyService = inject(CompanyService);
   private fb = inject(FormBuilder);
   private router = inject(Router);
+
+  error!: string;
+  message!: string;
+  message2!: string;  
 
   ngOnInit(): void {
     this.buildForm();
@@ -46,12 +53,12 @@ export class RegisterComponent {
   private buildForm(){
     this.registerForm = this.fb.group(
       {
-        firstName: ['', [Validators.required]],
-        lastName: ['', [Validators.required]],
+        nameCompany: ['', [Validators.required]],
+        descriptionCompany: ['', [Validators.required]],
         email: ['', [Validators.required, Validators.email]],
         password: ['', [
           Validators.required,
-          Validators.minLength(8),
+          Validators.minLength(5),
           Validators.maxLength(15),
         ]],
         rpassword: [''],
@@ -65,7 +72,22 @@ export class RegisterComponent {
 
 
   register() {
-    /*
+    let company = new Company();
+    company.name = this.registerForm.get('nameCompany')?.value;
+    company.description = this.registerForm.get('descriptionCompany')?.value;
+    this.companyService.create(company).subscribe({
+      next: (res: any) => {
+   //     this.router.navigateByUrl('/pvt/company');
+        console.log('register');
+      },
+      error: (err: any) => {
+        this.error = err.error.error;
+        this.message = err.error.message;
+        this.message2 = err.message;
+      },
+    });    
+
+/*    
     let user: User = {
       id: 0,
       firstName: this.registerForm.get('firstName')?.value,
@@ -89,15 +111,15 @@ export class RegisterComponent {
         console.log(err);
       },
     });
-    */
+*/    
   } 
 
-  getFirstNameErrors() {
-    if (this.FirstName.hasError('required')) return 'Field is requied!';
+  getNameCompanyErrors() {
+    if (this.NameCompany.hasError('required')) return 'Field is requied!';
     return '';
   }
-  getLastNameErrors() {
-    if (this.LastName.hasError('required')) return 'Field is requied!';
+  getDescriptionCompanyErrors() {
+    if (this.DescriptionCompany.hasError('required')) return 'Field is requied!';
     return '';
   }
   getEmailErrors() {
@@ -114,11 +136,11 @@ export class RegisterComponent {
     return '';
   }
 
-  get FirstName(): FormControl {
-    return this.registerForm.get('firstName') as FormControl;
+  get NameCompany(): FormControl {
+    return this.registerForm.get('nameCompany') as FormControl;
   }
-  get LastName(): FormControl {
-    return this.registerForm.get('lastName') as FormControl;
+  get DescriptionCompany(): FormControl {
+    return this.registerForm.get('descriptionCompany') as FormControl;
   }
   get Email(): FormControl {
     return this.registerForm.get('email') as FormControl;

@@ -39,7 +39,7 @@ export class LoginComponent {
   submit(event: Event): void {
     event.preventDefault();
     if(this.form.valid){
-      const value = this.form.value;
+//      const value = this.form.value;
       this.user = this.form.value;
       this.authService.login(this.user).subscribe({
         next: (res: any) => {

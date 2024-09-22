@@ -44,7 +44,9 @@ export class ImputationComponent {
   ngOnInit(): void {
     this.imputationService.getAll().subscribe({
       next: (res: Imputation[]) => {
+        console.log(res);
         this.imputations = res;
+        console.log(this.imputations);
         this.getDaysFromDate(1, 2024);
       },
       error: (err: any) => console.log(err),

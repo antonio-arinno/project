@@ -32,7 +32,18 @@
             </mat-form-field>
           </p>  
 
-
+          <p>
+            <mat-form-field>
+              <mat-label>Select</mat-label>
+              <mat-select formControlName="status">
+                @for (status of getkeys(userRoles); track status) {
+                  <mat-option [value]="userRoles[status]">
+                    {{status}}
+                  </mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          </p>  
           <p>
             <mat-form-field>
               <mat-label>Responsible</mat-label>
@@ -45,7 +56,42 @@
                 </mat-option>
               </mat-autocomplete>
             </mat-form-field>
-          </p>            
+          </p>   
+
+          <div class="example-container">
+            <h2>Users</h2>
+            <div              
+              cdkDropList
+              #todoList="cdkDropList"
+              [cdkDropListData]="users()"
+              [cdkDropListConnectedTo]="[doneList]"
+              class="example-list"
+              (cdkDropListDropped)="drop($event)">
+              @for (item of users(); track item) {
+                <div class="example-box" cdkDrag>{{item.name}}</div>
+              }
+            </div>
+          </div>
+          <div class="example-container">
+            <h2>Contributors</h2>
+            <div
+              cdkDropList
+              #doneList="cdkDropList"
+              [cdkDropListData]="contribuitors()"
+              [cdkDropListConnectedTo]="[todoList]"
+              class="example-list"
+              (cdkDropListDropped)="drop($event)">
+              @for (item of contribuitors(); track item) {
+                <div class="example-box" cdkDrag>{{item.name}}</div>
+              }
+            </div>
+          </div>
+
+
+
+
+
+
 
           <p>
             <mat-card-footer>

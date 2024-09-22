@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="io.jsonwebtoken.Jwts"/>
-    <fullyQualifiedTypeName name="java.util.Collection"/>
-    <fullyQualifiedTypeName name="org.springframework.security.core.GrantedAuthority"/>
-    <fullyQualifiedTypeName name="org.springframework.security.core.authority.SimpleGrantedAuthority"/>
-    <fullyQualifiedTypeName name="java.util.stream.Collectors"/>
-    <fullyQualifiedTypeName name="org.springframework.stereotype.Component"/>
-    <fullyQualifiedTypeName name="org.springframework.web.server.WebFilter"/>
-    <fullyQualifiedTypeName name="reactor.core.publisher.Mono"/>
     <fullyQualifiedTypeName name="org.springframework.http.HttpHeaders"/>
     <fullyQualifiedTypeName name="org.springframework.security.authentication.ReactiveAuthenticationManager"/>
     <fullyQualifiedTypeName name="org.springframework.security.authentication.UsernamePasswordAuthenticationToken"/>
@@ -17,7 +9,6 @@
     <fullyQualifiedTypeName name="jakarta.persistence.CascadeType"/>
     <fullyQualifiedTypeName name="org.hibernate.annotations.NotFound"/>
     <fullyQualifiedTypeName name="org.hibernate.annotations.NotFoundAction"/>
-    <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="org.springframework.web.reactive.config.EnableWebFlux"/>
     <fullyQualifiedTypeName name="org.springframework.context.annotation.Configuration"/>
     <fullyQualifiedTypeName name="org.springframework.context.annotation.Bean"/>
@@ -39,13 +30,11 @@
     <fullyQualifiedTypeName name="com.arinno.project.app.product.service.IUserFeign"/>
     <fullyQualifiedTypeName name="org.springframework.data.rest.core.annotation.RepositoryRestResource"/>
     <fullyQualifiedTypeName name="com.arinno.project.app.util.repository.UserDao"/>
-    <fullyQualifiedTypeName name="com.arinno.project.app.model.entity.Company"/>
     <fullyQualifiedTypeName name="org.antlr.v4.runtime.misc.NotNull"/>
     <fullyQualifiedTypeName name="jakarta.persistence.UniqueConstraint"/>
     <fullyQualifiedTypeName name="org.springframework.dao.DataAccessException"/>
     <fullyQualifiedTypeName name="java.io.Console"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PutMapping"/>
-    <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="jakarta.persistence.JoinColumn"/>
     <fullyQualifiedTypeName name="java.util.Locale"/>
     <fullyQualifiedTypeName name="java.time.LocalDate"/>
@@ -53,11 +42,22 @@
     <fullyQualifiedTypeName name="java.time.ZoneId"/>
     <fullyQualifiedTypeName name="java.util.Date"/>
     <fullyQualifiedTypeName name="feign.form.multipart.Output"/>
-    <fullyQualifiedTypeName name="java.lang.System"/>
     <fullyQualifiedTypeName name="org.springframework.stereotype.Service"/>
     <fullyQualifiedTypeName name="com.arinno.project.app.user.repository.UserDao"/>
     <fullyQualifiedTypeName name="com.arinno.project.app.user.service.IUserService"/>
-    <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
-    <fullyQualifiedTypeName name="com.arinno.project.app.model.entity.User"/>
     <fullyQualifiedTypeName name="net.minidev.json.JSONObject"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="jakarta.persistence.JoinTable"/>
+    <fullyQualifiedTypeName name="org.springframework.data.jpa.repository.Query"/>
+    <fullyQualifiedTypeName name="jakarta.persistence.Enumerated"/>
+    <fullyQualifiedTypeName name="jakarta.persistence.EnumType"/>
+    <fullyQualifiedTypeName name="com.arinno.project.app.model.entity.Project"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="com.arinno.project.app.model.entity.Status"/>
+    <fullyQualifiedTypeName name="com.arinno.project.app.model.entity.User"/>
+    <fullyQualifiedTypeName name="java.lang.System"/>
+    <fullyQualifiedTypeName name="com.arinno.project.app.company.service.ICompanyService"/>
+    <fullyQualifiedTypeName name="com.arinno.project.app.model.entity.Company"/>
+    <fullyQualifiedTypeName name="com.arinno.project.app.company.repository.CompanyDao"/>
+    <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
 </qualifiedTypeNameHistroy>

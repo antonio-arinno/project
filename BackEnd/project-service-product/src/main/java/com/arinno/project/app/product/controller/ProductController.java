@@ -22,6 +22,7 @@ import com.arinno.project.app.model.entity.Company;
 import com.arinno.project.app.model.entity.Product;
 import com.arinno.project.app.product.service.IProductService;
 
+
 @RestController
 public class ProductController {
 	
@@ -31,7 +32,12 @@ public class ProductController {
 	@GetMapping("/")
 	public List<Product> list(@RequestHeader(value="Authorization") String auth){	
 		return productService.findByCompany(getCompany(auth));
-	}			
+	}		
+	
+	@GetMapping("/contributor/{id}")
+	public List<Product> listNotProductionContributor(@PathVariable String id, @RequestHeader(value="Authorization") String auth){
+		return productService.findByProjectNotProductionAndContributorAndCompany(Long.parseLong(id), getCompany(auth).getId());
+	}	
 
 	@GetMapping("/{id}")
 	public Product product(@PathVariable Long id, @RequestHeader(value="Authorization") String auth) {

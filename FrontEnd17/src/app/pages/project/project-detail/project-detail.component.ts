@@ -7,8 +7,17 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatSelectModule } from '@angular/material/select';
 
-import { Observable, map, mergeMap, startWith } from 'rxjs';
+import {
+  CdkDragDrop,
+  moveItemInArray,
+  transferArrayItem,
+  CdkDrag,
+  CdkDropList,
+} from '@angular/cdk/drag-drop';
+
+import { Observable, concat, map, mergeMap, startWith } from 'rxjs';
 
 import { ProjectService } from '@core/services/project.service';
 import { UserService } from '@core/services/user.service';
@@ -16,16 +25,32 @@ import { Project } from '@core/model/project';
 import { Product } from '@core/model/product';
 import { User } from  '@core/model/user';
 import { ProductService } from '@core/services/product.service';
+import { Status } from '@core/model/status';
+import { ImputationItem } from '@core/model/imputation-item';
 
 @Component({
   selector: 'app-project-detail',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatInputModule, MatButtonModule, ReactiveFormsModule, MatAutocompleteModule],
+  imports: [CommonModule, MatCardModule, MatInputModule, MatButtonModule, ReactiveFormsModule, MatAutocompleteModule, MatSelectModule, CdkDropList, CdkDrag],
   templateUrl: './project-detail.component.html',
   styleUrl: './project-detail.component.scss'
 })
+
+
 export class ProjectDetailComponent {
 
+  drop(event: CdkDragDrop<any[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex,
+      );
+    }
+  }  
   projectService = inject(ProjectService);
   productService = inject(ProductService);
   userService = inject(UserService);
@@ -35,19 +60,25 @@ export class ProjectDetailComponent {
 
   form!: FormGroup;
   project!: Project;
+  user!: User;
   error!: string;
   message!: string;
   message2!: string;
 
   users: WritableSignal<User[]> = signal([]);
+  contribuitors: WritableSignal<User[]> = signal([]);
 
   filteredProducts: Observable<Product[]> | undefined;    
-
   filteredUsers: Observable<User[]> | undefined;  
 
-  ngOnInit(): void {
-    this.getUsers();
+  public keys = Object.keys;
+  public userRoles = Status;
 
+  public getkeys(elementor: typeof Status){
+    return this.keys(elementor).map(key => key as keyof typeof elementor);
+  }  
+
+  ngOnInit(): void {
     this.activateRoute.params.subscribe(params => {
       this.buildForm();
       let id = params['id']
@@ -58,11 +89,24 @@ export class ProjectDetailComponent {
             this.form.get('name')?.setValue(res.name);
             this.form.get('description')?.setValue(res.description);
             this.form.get('product')?.setValue(res.product);
+            this.form.get('status')?.setValue(res.status);
             this.form.get('responsible')?.setValue(res.responsible);
+            this.contribuitors.set(res.contributors);
+            this.userService.getAll()
+            .subscribe(users => {
+              this.users.set(users);
+              this.users.update((currentUsers) => currentUsers.filter(
+                objeto => !res.contributors.some(objeto2 => objeto2.id == objeto.id)
+              ))
+            })
           },
           error: (err: any) => console.log(err)
         });
       }else{
+        this.userService.getAll()
+        .subscribe(users => {
+          this.users.set(users);
+        })
         this.project = new Project();
       }
     });
@@ -83,14 +127,6 @@ export class ProjectDetailComponent {
     );            
   }  
 
-  getUsers(){
-    this.userService.getAll().subscribe({
-      next: (res: User[]) => {
-        this.users.set(res);
-      },
-      error: (err: any) => console.log(err),
-    });    
-  }
 
   private _getAll(): Observable<Product[]> {
     return this.productService.getAll();
@@ -124,6 +160,7 @@ export class ProjectDetailComponent {
       name: ['', [Validators.required]],
       description: ['', [Validators.required]],
       product: ['', [Validators.required]],
+      status: ['',  [Validators.required]],
       responsible: ['', [Validators.required]]
     });  
   }  
@@ -132,6 +169,7 @@ export class ProjectDetailComponent {
     event.preventDefault();
     if(this.form.valid){
       this.project = this.form.value;
+      this.project.contributors = this.contribuitors();
       this.projectService.update(this.project).subscribe({
         next: (res: any) => {
           this.router.navigateByUrl('/pvt/project');
@@ -147,8 +185,9 @@ export class ProjectDetailComponent {
 
   create(event: Event): void {
     event.preventDefault();
-    if(this.form.valid){
+    if(this.form.valid){    
       this.project = this.form.value;
+      this.project.contributors = this.contribuitors();
       this.projectService.create(this.project).subscribe({
         next: (res: any) => {
           this.router.navigateByUrl('/pvt/project');
@@ -171,7 +210,6 @@ export class ProjectDetailComponent {
           this.router.navigateByUrl('/pvt/project');
         },
         error: (err: any) => {
-          console.log(err);
           this.error = err.error.error;
           this.message = err.error.message;
           this.message2 = err.message;
@@ -182,3 +220,8 @@ export class ProjectDetailComponent {
 
 
 }
+
+function value(value: User[]): User[] {
+  throw new Error('Function not implemented.');
+}
+

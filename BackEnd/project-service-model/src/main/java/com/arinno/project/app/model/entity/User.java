@@ -5,12 +5,14 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -43,6 +45,12 @@ public class User implements Serializable {
 	
 	@ManyToMany(fetch = FetchType.LAZY)
 	private List<Role> roles;
+	
+/*	
+ 	@JsonIgnoreProperties(value = "contributors", allowSetters = true)
+	@ManyToMany(mappedBy = "contributors", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Project> projects;
+*/
 	
     @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })	
     @ManyToOne(fetch = FetchType.EAGER)	
@@ -113,13 +121,23 @@ public class User implements Serializable {
 		this.roles = roles;
 	}
 	
+
 	public Company getCompany() {
 		return company;
 	}
-
+	
 	public void setCompany(Company company) {
 		this.company = company;
 	}
+	
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", enabled=" + enabled
+				+ ", name=" + name + ", lastName=" + lastName + ", email=" + email + ", roles=" + roles + ", company="
+				+ company + "]";
+	}
+
+
 
 	private static final long serialVersionUID = 7518857854008514980L;
 

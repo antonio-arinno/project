@@ -11,7 +11,7 @@
 
 mat-card {
   border-radius: 50px;
-  padding: 50px;
+ // padding: 50px;
 }
 
 h1 {
@@ -37,10 +37,15 @@ mat-grid-list {
     font-size: 1.4rem;
   }
 }
-
+/*
 mat-form-field {
   width: 66.67%;
   transform: scale(1.5);
+}
+*/
+mat-form-field {
+  width: 100%;
+  min-width: 300px;
 }
 
 .login-link {
@@ -49,3 +54,4 @@ mat-form-field {
   align-items: center;
   justify-content: space-around;
 }
+

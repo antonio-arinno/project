@@ -9,8 +9,6 @@ public interface IUserService {
 	
 	public List<User> findByCompany(Company company);
 	
-	public User findByIdAndCompany(Long id, Company company);
-	
 	public User save(User user);
 		
 	public void deleteByIdAndCompany(Long id, Company company);
@@ -18,5 +16,7 @@ public interface IUserService {
 	public List<User> findByNameContainingIgnoreCaseAndCompany(String term, Company company);
 
 	public Company findByUsername(String name);
+	
+	public User findByIdAndCompany(Long id, Company company);
 
 }

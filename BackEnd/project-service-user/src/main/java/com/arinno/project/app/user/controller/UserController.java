@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.arinno.project.app.model.entity.Company;
-import com.arinno.project.app.model.entity.Project;
 import com.arinno.project.app.model.entity.User;
 import com.arinno.project.app.user.service.IUserService;
 
@@ -25,11 +24,15 @@ public class UserController {
 	public List<User> list(@RequestHeader(value="Authorization") String auth){
 		return userService.findByCompany(getCompany(auth));	
 	}	
-	
-	
+		
 	@GetMapping("/select/{term}")
 	public List<User> listSelection(@PathVariable String term, @RequestHeader(value="Authorization") String auth){	
 		return userService.findByNameContainingIgnoreCaseAndCompany(term, getCompany(auth));
+	}	
+	
+	@GetMapping("/{id}")
+	public User findByIdAndCompany(@PathVariable Long id, @RequestHeader(value="Authorization") String auth) {
+		return userService.findByIdAndCompany(id, getCompany(auth));
 	}		
 	
 	private Company getCompany(String auth) {

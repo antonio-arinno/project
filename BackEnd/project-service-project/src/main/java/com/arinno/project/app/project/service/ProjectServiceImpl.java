@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.arinno.project.app.model.entity.Company;
 import com.arinno.project.app.model.entity.Project;
+import com.arinno.project.app.model.entity.Status;
 import com.arinno.project.app.project.repository.ProjectDao;
 
 @Service
@@ -52,6 +53,18 @@ public class ProjectServiceImpl implements IProjectService {
 	@Transactional
 	public List<Project> findByNameContainingIgnoreCaseAndCompany(String term, Company company) {
 		return projectDao.findByNameContainingIgnoreCaseAndCompany(term, company);
+	}
+
+	@Override
+	@Transactional
+	public List<Project> findByStatus(Status status) {
+		return projectDao.findByStatus(status);
+	}
+
+	@Override
+	@Transactional
+	public List<Project> findByStatusNotProduction() {
+		return projectDao.findByStatusNotProduction(Status.PRODUCTION);
 	}		
 
 }

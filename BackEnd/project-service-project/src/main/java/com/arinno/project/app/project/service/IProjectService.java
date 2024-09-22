@@ -4,10 +4,15 @@ import java.util.List;
 
 import com.arinno.project.app.model.entity.Company;
 import com.arinno.project.app.model.entity.Project;
+import com.arinno.project.app.model.entity.Status;
 
 public interface IProjectService {
 
 	public List<Project> findByCompany(Company company);
+	
+	public List<Project> findByStatus(Status status);
+	
+	public List<Project> findByStatusNotProduction();
 	
 	public Project findByIdAndCompany(Long id, Company company);
 	

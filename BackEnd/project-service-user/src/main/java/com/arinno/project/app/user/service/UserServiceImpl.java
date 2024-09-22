@@ -23,11 +23,6 @@ public class UserServiceImpl implements IUserService  {
 	}
 
 	@Override
-	public User findByIdAndCompany(Long id, Company company) {
-		return userDao.findByIdAndCompany(id, company);
-	}
-
-	@Override
 	@Transactional
 	public User save(User user) {
 		return userDao.save(user);
@@ -49,6 +44,12 @@ public class UserServiceImpl implements IUserService  {
 	@Override
 	public Company findByUsername(String name) {
 		return userDao.findByUsername(name).getCompany();
+	}
+
+	@Override
+	@Transactional
+	public User findByIdAndCompany(Long id, Company company) {
+		return userDao.findByIdAndCompany(id, company);
 	}
 	
 

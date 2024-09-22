@@ -9,6 +9,8 @@ public interface IProductService {
 
 	public List<Product> findByCompany(Company company);
 	
+	public List<Product> findByProjectNotProductionAndContributorAndCompany(Long id, Long company_id);
+	
 	public Product findByIdAndCompany(Long id, Company company);
 	
 	public Product save(Product product);
@@ -18,5 +20,5 @@ public interface IProductService {
 	public List<Product> findByNameContainingIgnoreCaseAndCompany(String term, Company company);
 
 	public Company findByUsername(String name);
-
+	
 }

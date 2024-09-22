@@ -16,9 +16,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatSelectModule } from '@angular/material/select';
-import { MatSelectChange } from '@angular/material/select';
 
 import { ImputationService } from '@core/services/imputation.service';
 import { Imputation } from '@core/model/imputation';
@@ -26,7 +24,8 @@ import { ImputationItem } from '@core/model/imputation-item';
 import { Product } from '@core/model/product';
 import { ProductService } from '@core/services/product.service';
 import { Project } from '@core/model/project';
-import { ProjectService } from '@core/services/project.service';
+import { AuthService } from '@core/services/auth.service';
+
 
 interface Food {
   value: string;
@@ -47,6 +46,7 @@ export class ImputationDetail2Component {
 
   imputationService = inject(ImputationService);
   productService = inject(ProductService);
+  authService = inject(AuthService);
   fb = inject(FormBuilder);
   cd = inject(ChangeDetectorRef)
   router = inject(Router);
@@ -93,7 +93,7 @@ export class ImputationDetail2Component {
   }  
 
   getProducts(){
-    this.productService.getAll().subscribe({
+    this.productService.getByContributor(this.authService.user.id).subscribe({
       next: (res: Product[]) => {
         this.products.set(res);
       },
@@ -109,7 +109,6 @@ export class ImputationDetail2Component {
       this.totalTime = this.totalTime + item.time;
     }
   }
-
 
   get item() {
     return this.imputationForm.controls["imputationItemForm"] as FormArray;
@@ -183,14 +182,11 @@ export class ImputationDetail2Component {
       this.imputation = new Imputation();
       this.imputation.id = this.imputationForm.get('id')?.value;
       this.imputation.date = this.imputationForm.get('date')?.value;
-      console.log(this.imputationForm.value);
       for(let item of this.imputationForm.get('imputationItemForm')?.value){
-        console.log(item);
         if(!this.updateItem(item)){
           this.loadItem(item);
         }
       }
-      console.log(this.imputation);
       this.imputationService.update(this.imputation).subscribe({
         next: (res: any) => {
           this.router.navigateByUrl('/pvt/imputation');
@@ -259,10 +255,8 @@ export class ImputationDetail2Component {
   }
 
   deleteImputationItem(item: number): void {
-    console.log(this.imputationForm.value);
     this.item.removeAt(item);
     this.dataSourceItems = new MatTableDataSource(this.item.controls);
-    console.log(this.imputationForm.value);
     this.updateTime();
   }
 
